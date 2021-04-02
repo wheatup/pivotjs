@@ -1,11 +1,11 @@
-Pivot.js is a super lite-weight library for creating DOM structure with javascript.
+V.js is a super lite-weight library for creating DOM structure with javascript.
 
 ## Basic usage
 
 ### Register a view
 
 ```javascript
-Pivot.View('TestView', () => ({
+V.View('TestView', () => ({
 	render() {
 		return V('div', { class: 'test-view' }, [
 			V('h1', 'Hello World!'), 
@@ -41,7 +41,7 @@ You can get a normal HTMLElement by calling `V('TestView').dom`
 ### Nesting another view
 
 ```javascript
-Pivot.View('TestView', () => ({
+V.View('TestView', () => ({
     render() {
         return (
             V('div', { class: 'test-view' }, [
@@ -57,7 +57,7 @@ Pivot.View('TestView', () => ({
     }
 });
 
-Pivot.View('NestedView', () => ({
+V.View('NestedView', () => ({
     render() {
         // get the properties from this.props that passed from above
         return V('span', this.props.candies)
@@ -78,7 +78,7 @@ This will create a structure like this:
 ### Handling events
 
 ```javascript
-Pivot.View('TestView', () => ({
+V.View('TestView', () => ({
 
 	// you can create a function directly here
     onClickMe() {
@@ -101,7 +101,7 @@ Pivot.View('TestView', () => ({
 ### Modifying states
 
 ```javascript
-Pivot.View('TestView', () => ({
+V.View('TestView', () => ({
     candies: 0,
 
     addCandy(number) {

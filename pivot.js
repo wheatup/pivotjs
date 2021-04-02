@@ -1,4 +1,4 @@
-var Pivot = (() => {
+var V = (() => {
 	const viewRegistrations = {};
 
 	const diffVNodes = (old, neo) => {
@@ -229,5 +229,5 @@ var Pivot = (() => {
 })();
 
 if (typeof module !== 'undefined') {
-	module.exports = Pivot;
+	module.exports = V;
 }
