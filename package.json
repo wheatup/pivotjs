@@ -1,0 +1,16 @@
+{
+	"name": "pivot",
+	"version": "1.0.0",
+	"description": "Pivot.js is a super lite-weight library for creating DOM structure with javascript.",
+	"main": "pivot.js",
+	"keywords": [
+		"dom",
+		"virtual dom"
+	],
+	"author": "wheatup",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/wheatup/wheen.git"
+	},
+	"license": "ISC"
+}
