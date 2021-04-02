@@ -6,15 +6,15 @@ V.js is a super lite-weight library for creating DOM structure with javascript.
 
 ```javascript
 V.View('TestView', () => ({
-	render() {
-		return V('div', { class: 'test-view' }, [
-			V('h1', 'Hello World!'), 
-			V('ul', [
-				V('li', 'hello'), 
-				V('li', 'world')
-			])
-		]);
-	}
+  render() {
+    return V('div', { class: 'test-view' }, [
+      V('h1', 'Hello World!'), 
+      V('ul', [
+        V('li', 'hello'), 
+        V('li', 'world')
+      ])
+    ]);
+  }
 }));
 ```
 
@@ -28,11 +28,11 @@ This will create a structure like this and insert it into docment.body:
 
 ```html
 <div data-pivot="TestView" class="test-view">
-	<h1>Hello World!</h1>
-	<ul>
-		<li>hello</li>
-		<li>world</li>
-	</ul>
+  <h1>Hello World!</h1>
+  <ul>
+    <li>hello</li>
+    <li>world</li>
+  </ul>
 </div>
 ```
 
@@ -42,26 +42,26 @@ You can get a normal HTMLElement by calling `V('TestView').dom`
 
 ```javascript
 V.View('TestView', () => ({
-    render() {
-        return (
-            V('div', { class: 'test-view' }, [
-                V('h1', 'Hello World!'),
+  render() {
+    return (
+      V('div', { class: 'test-view' }, [
+        V('h1', 'Hello World!'),
 
-                // instead of tag name, specify the view name you registered
-                V('NestedView', { candies: 42 }),
+        // instead of tag name, specify the view name you registered
+        V('NestedView', { candies: 42 }),
 
-                // and you can nest a duplicate that has different properties
-                V('NestedView', { candies: 1337 })
-            ])
-        );
-    }
+        // and you can nest a duplicate that has different properties
+        V('NestedView', { candies: 1337 })
+      ])
+    );
+  }
 });
 
 V.View('NestedView', () => ({
-    render() {
-        // get the properties from this.props that passed from above
-        return V('span', this.props.candies)
-    }
+  render() {
+    // get the properties from this.props that passed from above
+    return V('span', this.props.candies)
+  }
 });
 ```
 
@@ -69,9 +69,9 @@ This will create a structure like this:
 
 ```html
 <div data-pivot="TestView" class="test-view">
-	<h1>Hello World!</h1>
-	<span data-pivot="NestedView">42</span>
-	<span data-pivot="NestedView">1337</span>
+  <h1>Hello World!</h1>
+  <span data-pivot="NestedView">42</span>
+  <span data-pivot="NestedView">1337</span>
 </div>
 ```
 
@@ -80,21 +80,21 @@ This will create a structure like this:
 ```javascript
 V.View('TestView', () => ({
 
-	// you can create a function directly here
-    onClickMe() {
-        alert('ouch');
-    },
+  // you can create a function directly here
+  onClickMe() {
+    alert('ouch');
+  },
 
-    render() {
-        return (
-            V('div', { class: 'test-view' }, [
-                V('h1', { text: 'Hello World!' }),
+  render() {
+    return (
+      V('div', { class: 'test-view' }, [
+        V('h1', { text: 'Hello World!' }),
 
-                // when the span is clicked, it alerts "ouch"
-                V('span', 'Click Me!', { '@click': () => this.onClickMe() })
-            ])
-        );
-    }
+        // when the span is clicked, it alerts "ouch"
+        V('span', 'Click Me!', { '@click': () => this.onClickMe() })
+      ])
+    );
+  }
 });
 ```
 
@@ -102,23 +102,23 @@ V.View('TestView', () => ({
 
 ```javascript
 V.View('TestView', () => ({
-    candies: 0,
+  candies: 0,
 
-    addCandy(number) {
-        this.candies += number;
-        // rerender so the changes can apply
-        t​his.render();
-    },
+  addCandy(number) {
+    this.candies += number;
+    // rerender so the changes can apply
+    t​his.render();
+  },
 
-    render() {
-        return (
-            V('div', { class: 'test-view ' + this.candies ? 'enough' : 'not-enough' }, [
-                V('span', 'Candies: ' + this.candies),
+  render() {
+    return (
+      V('div', { class: 'test-view ' + this.candies ? 'enough' : 'not-enough' }, [
+        V('span', 'Candies: ' + this.candies),
 
-                V('button', 'Add 1', { '@click': () => this.addCandy(1) }),
-                V('button', 'Add 2', { '@click': () => this.addCandy(2) }]
-            ])
-        );
-    }
+        V('button', 'Add 1', { '@click': () => this.addCandy(1) }),
+        V('button', 'Add 2', { '@click': () => this.addCandy(2) }]
+      ])
+    );
+  }
 });
 ```
