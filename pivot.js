@@ -131,11 +131,10 @@ var V = (() => {
 		}
 
 		render(parentVNode) {
-			const dom = $e(this.tag);
 			if (this.node) {
 				dom.setAttribute('data-pivot', this.node.name || '');
 			}
-			// const dom = document.createElement(this.tag);
+			const dom = document.createElement(this.tag);
 			dom.vnode = this;
 			this.dom = dom;
 
