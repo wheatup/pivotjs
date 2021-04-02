@@ -1,4 +1,4 @@
-var V = (() => {
+var P = (() => {
 	const viewRegistrations = {};
 
 	const diffVNodes = (old, neo) => {
@@ -228,5 +228,5 @@ var V = (() => {
 })();
 
 if (typeof module !== 'undefined') {
-	module.exports = V;
+	module.exports = P;
 }
