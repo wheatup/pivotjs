@@ -1,6 +1,6 @@
 {
 	"name": "@wheatup/pivotjs",
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"description": "Pivot.js is a super lite-weight library for creating DOM structure with javascript.",
 	"main": "pivot.js",
 	"keywords": [
