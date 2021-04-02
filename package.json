@@ -1,5 +1,5 @@
 {
-	"name": "pivot",
+	"name": "pivot-js",
 	"version": "1.0.0",
 	"description": "Pivot.js is a super lite-weight library for creating DOM structure with javascript.",
 	"main": "pivot.js",
