@@ -122,3 +122,25 @@ P.View('TestView', () => ({
   }
 });
 ```
+
+### Refs
+
+```javascript
+P.View('TestView', () => ({
+  candies: 0,
+
+  addCandy(number) {
+    this.candies += number;
+    // rerender so the changes can apply
+    t​his.render();
+  },
+
+  render() {
+    return (
+      P('div', [
+        P('input', { ref: 'username', type: 'text' })
+      ])
+    );
+  }
+});
+```
