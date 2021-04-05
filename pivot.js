@@ -90,6 +90,7 @@ var P = (() => {
 
 	class Node {
 		constructor(name, gen, props = {}) {
+			let _shouldUpdate = false;
 			this.name = name;
 			this.refs = {};
 			this.props = props;
@@ -98,7 +99,25 @@ var P = (() => {
 			this.view = view;
 			const { render, loaded, ...rest } = view;
 			Object.entries(rest).forEach(([key, value]) => {
-				this[key] = value;
+				let val = value;
+				Object.defineProperty(this, key, {
+					enumerable: false,
+					configurable: false,
+					set(value) {
+						val = value;
+						this.render();
+						if (!_shouldUpdate) {
+							setTimeout(() => {
+								this.render();
+								_shouldUpdate = false;
+							}, 0);
+							_shouldUpdate = true;
+						}
+					},
+					get() {
+						return val;
+					}
+				})
 			});
 		}
 

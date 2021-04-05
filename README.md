@@ -106,8 +106,6 @@ P.View('TestView', () => ({
 
   addCandy(number) {
     this.candies += number;
-    // rerender so the changes can apply
-    t​his.render();
   },
 
   render() {
@@ -123,22 +121,18 @@ P.View('TestView', () => ({
 });
 ```
 
-### Refs
+### Using refs and lifecycles
 
 ```javascript
 P.View('TestView', () => ({
-  candies: 0,
-
-  addCandy(number) {
-    this.candies += number;
-    // rerender so the changes can apply
-    t​his.render();
+  loaded() {
+    console.log(this.refs.username.value);	// Alice
   },
 
   render() {
     return (
       P('div', [
-        P('input', { ref: 'username', type: 'text' })
+        P('input', { ref: 'username', type: 'text', value: 'Alice' })
       ])
     );
   }
