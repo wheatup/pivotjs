@@ -104,8 +104,16 @@ var P = (() => {
 					enumerable: false,
 					configurable: false,
 					set(value) {
+						if (Object.is(val, value) || val === value || (() => {
+							try {
+								return JSON.stringify(val) === JSON.stringify(value);
+							} catch (ex) {
+								return false;
+							}
+						})) {
+							return;
+						}
 						val = value;
-						this.render();
 						if (!_shouldUpdate) {
 							setTimeout(() => {
 								this.render();
@@ -126,11 +134,6 @@ var P = (() => {
 			this.vnode = this.view.render.call(this);
 			this.vnode.node = this;
 			if (oldVNode) {
-				// const dom = this.vnode.render().dom;
-				// oldVNode.dom.insertAdjacentElement('afterend', dom);
-				// oldVNode.dom.remove();
-
-				// TODO: only update changes
 				diffVNodes(oldVNode, this.vnode)
 			} else {
 				if (this.view.loaded) {
