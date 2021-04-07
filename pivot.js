@@ -76,6 +76,16 @@ var P = (() => {
 		}
 	}
 
+	const compare = (old, neo) => {
+		return Object.is(old, neo) || old === neo || (() => {
+			try {
+				return JSON.stringify(old) === JSON.stringify(neo);
+			} catch (ex) {
+				return false;
+			}
+		})();
+	}
+
 	class View {
 		constructor(name, gen) {
 			this.name = name;
@@ -104,15 +114,7 @@ var P = (() => {
 					enumerable: false,
 					configurable: false,
 					set(value) {
-						if (Object.is(val, value) || val === value || (() => {
-							try {
-								return JSON.stringify(val) === JSON.stringify(value);
-							} catch (ex) {
-								return false;
-							}
-						})) {
-							return;
-						}
+						if (compare(val, value)) return;
 						val = value;
 						if (!_shouldUpdate) {
 							setTimeout(() => {
