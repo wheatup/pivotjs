@@ -34,15 +34,17 @@ var P = (() => {
 					if (!k.startsWith('@')) {
 						old.dom.setAttribute(k, v);
 					} else {
-						old.dom.addEventListener(k.replace(/^@/, ''), v);
+						old.dom[`on${k.replace(/^@/, '')}`] = v;
+						// old.dom.addEventListener(k.replace(/^@/, ''), v);
 					}
 				});
 				changedProps.forEach(([k, v]) => {
 					if (!k.startsWith('@')) {
 						old.dom.setAttribute(k, v);
 					} else {
-						old.dom.removeEventListener(k.replace(/^@/, ''), old.props[k]);
-						old.dom.addEventListener(k.replace(/^@/, ''), v);
+						old.dom[`on${k.replace(/^@/, '')}`] = v;
+						// old.dom.removeEventListener(k.replace(/^@/, ''), old.props[k]);
+						// old.dom.addEventListener(k.replace(/^@/, ''), v);
 					}
 				});
 
@@ -50,7 +52,8 @@ var P = (() => {
 					if (!k.startsWith('@')) {
 						old.dom.removeAttribute(k);
 					} else {
-						old.dom.removeEventListener(k.replace(/^@/, ''), old.props[k]);
+						delete old.dom[`on${k.replace(/^@/, '')}`];
+						// old.dom.removeEventListener(k.replace(/^@/, ''), old.props[k]);
 					}
 				});
 			}
@@ -177,7 +180,8 @@ var P = (() => {
 							current.node.refs[value] = dom;
 						}
 					} else if (key.startsWith('@')) {
-						dom.addEventListener(key.replace(/^@/, ''), value);
+						dom[`on${key.replace(/^@/, '')}`] = value;
+						// dom.addEventListener(key.replace(/^@/, ''), value);
 					} else {
 						dom.setAttribute(key, value);
 					}
