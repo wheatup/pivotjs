@@ -13,50 +13,56 @@ var P = (() => {
 		} if ((Array.isArray(old.children) && old.children.some(e => !(e instanceof VNode))) || (Array.isArray(neo.children) && neo.children.some(e => !(e instanceof VNode)))) {
 			renew(old, neo);
 		} else {
-			let ref, combiled = { ...old.props, ...neo.props };
-			({ ref, ...combiled } = combiled);
-			if (combiled) {
-				const addedProps = [];
-				const removedProps = [];
-				const changedProps = [];
+			const combiled = { ...old.props, ...neo.props };
+			const addedProps = [];
+			const removedProps = [];
+			const changedProps = [];
 
-				Object.entries(combiled).forEach(([k, v]) => {
-					if (typeof old.props[k] === 'undefined' && typeof neo.props[k] !== 'undefined') {
-						addedProps.push([k, v]);
-					} else if (typeof old.props[k] !== 'undefined' && typeof neo.props[k] === 'undefined') {
-						removedProps.push(k);
-					} else if (old.props[k] !== neo.props[k]) {
-						changedProps.push([k, v]);
-					}
-				});
+			Object.entries(combiled).forEach(([k, v]) => {
+				if (typeof old.props[k] === 'undefined' && typeof neo.props[k] !== 'undefined') {
+					addedProps.push([k, v]);
+				} else if (typeof old.props[k] !== 'undefined' && typeof neo.props[k] === 'undefined') {
+					removedProps.push(k);
+				} else if (old.props[k] !== neo.props[k]) {
+					changedProps.push([k, v]);
+				}
+			});
 
-				addedProps.forEach(([k, v]) => {
-					if (!k.startsWith('@')) {
-						old.dom.setAttribute(k, v);
-					} else {
-						old.dom[`on${k.replace(/^@/, '')}`] = v;
-						// old.dom.addEventListener(k.replace(/^@/, ''), v);
+			addedProps.forEach(([k, v]) => {
+				if (!k.startsWith('@')) {
+					if ('value' === k) {
+						old.dom[k] = v;
 					}
-				});
-				changedProps.forEach(([k, v]) => {
-					if (!k.startsWith('@')) {
-						old.dom.setAttribute(k, v);
-					} else {
-						old.dom[`on${k.replace(/^@/, '')}`] = v;
-						// old.dom.removeEventListener(k.replace(/^@/, ''), old.props[k]);
-						// old.dom.addEventListener(k.replace(/^@/, ''), v);
+					old.dom.setAttribute(k, v);
+				} else {
+					old.dom[`on${k.replace(/^@/, '')}`] = v;
+					// old.dom.addEventListener(k.replace(/^@/, ''), v);
+				}
+			});
+			changedProps.forEach(([k, v]) => {
+				if (!k.startsWith('@')) {
+					if ('value' === k) {
+						old.dom[k] = v;
 					}
-				});
+					old.dom.setAttribute(k, v);
+				} else {
+					old.dom[`on${k.replace(/^@/, '')}`] = v;
+					// old.dom.removeEventListener(k.replace(/^@/, ''), old.props[k]);
+					// old.dom.addEventListener(k.replace(/^@/, ''), v);
+				}
+			});
 
-				removedProps.forEach(k => {
-					if (!k.startsWith('@')) {
-						old.dom.removeAttribute(k);
-					} else {
-						delete old.dom[`on${k.replace(/^@/, '')}`];
-						// old.dom.removeEventListener(k.replace(/^@/, ''), old.props[k]);
+			removedProps.forEach(k => {
+				if (!k.startsWith('@')) {
+					if ('value' === k) {
+						old.dom[k] = '';
 					}
-				});
-			}
+					old.dom.removeAttribute(k);
+				} else {
+					delete old.dom[`on${k.replace(/^@/, '')}`];
+					// old.dom.removeEventListener(k.replace(/^@/, ''), old.props[k]);
+				}
+			});
 
 			if (old.children !== neo.children) {
 				if (!Array.isArray(neo.children)) {
