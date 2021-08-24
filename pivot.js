@@ -146,10 +146,6 @@ var P = (() => {
 			this.vnode.node = this;
 			if (oldVNode) {
 				diffVNodes(oldVNode, this.vnode)
-			} else {
-				if (this.view.loaded) {
-					this.view.loaded.call(this);
-				}
 			}
 
 			return this.vnode;
@@ -226,10 +222,10 @@ var P = (() => {
 	const renderElement = (tag, ...args) => {
 		let props, children;
 		args.forEach(arg => {
-			if (typeof arg === 'string' || typeof arg === 'function' || Array.isArray(arg)) {
-				children = arg;
-			} else if (typeof arg === 'object') {
+			if (typeof arg === 'object' && !Array.isArray(arg)) {
 				props = arg;
+			} else {
+				children = arg;
 			}
 		})
 		return new VNode({ tag, props, children });
@@ -240,6 +236,9 @@ var P = (() => {
 		if (view) {
 			const node = view.generateNode(args[1]);
 			const vnode = node.render().render();
+			if(node.view.loaded) {
+				node.view.loaded.call(node);
+			}
 			return vnode;
 		} else {
 			return renderElement(...args);

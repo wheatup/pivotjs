@@ -6,14 +6,11 @@ Pivot.js is a super lite-weight library for creating DOM structure with javascri
 
 ```javascript
 P.View('TestView', () => ({
-  render() {
+  render () {
     return P('div', { class: 'test-view' }, [
-      P('h1', 'Hello World!'), 
-      P('ul', [
-        P('li', 'hello'), 
-        P('li', 'world')
-      ])
-    ]);
+      P('h1', 'Hello World!'),
+      P('ul', [P('li', 'hello'), P('li', 'world')])
+    ])
   }
 }));
 ```
@@ -42,27 +39,25 @@ You can get a normal HTMLElement by calling `P('TestView').dom`
 
 ```javascript
 P.View('TestView', () => ({
-  render() {
-    return (
-      P('div', { class: 'test-view' }, [
-        P('h1', 'Hello World!'),
+  render () {
+    return P('div', { class: 'test-view' }, [
+      P('h1', 'Hello World!'),
 
-        // instead of tag name, specify the view name you registered
-        P('NestedView', { candies: 42 }),
+      // instead of tag name, specify the view name you registered
+      P('NestedView', { candies: 42 }),
 
-        // and you can nest a duplicate that has different properties
-        P('NestedView', { candies: 1337 })
-      ])
-    );
+      // and you can nest a duplicate that has different properties
+      P('NestedView', { candies: 1337 })
+    ])
   }
-});
+}));
 
 P.View('NestedView', () => ({
-  render() {
+  render () {
     // get the properties from this.props that passed from above
     return P('span', this.props.candies)
   }
-});
+}));
 ```
 
 This will create a structure like this:
@@ -95,7 +90,7 @@ P.View('TestView', () => ({
       ])
     );
   }
-});
+}));
 ```
 
 ### Modifying states
@@ -118,23 +113,21 @@ P.View('TestView', () => ({
       ])
     );
   }
-});
+}));
 ```
 
 ### Using refs and lifecycles
 
 ```javascript
 P.View('TestView', () => ({
-  loaded() {
-    console.log(this.refs.username.value);	// Alice
+  loaded () {
+    console.log(this.refs.username.value) // Alice
   },
 
-  render() {
-    return (
-      P('div', [
-        P('input', { ref: 'username', type: 'text', value: 'Alice' })
-      ])
-    );
+  render () {
+    return P('div', [
+      P('input', { ref: 'username', type: 'text', value: 'Alice' })
+    ])
   }
-});
+}))
 ```
