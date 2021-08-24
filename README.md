@@ -35,29 +35,33 @@ This will create a structure like this and insert it into docment.body:
 
 You can get a normal HTMLElement by calling `P('TestView').dom`
 
+---
+
 ### Nesting another view
 
 ```javascript
 P.View('TestView', () => ({
-  render () {
-    return P('div', { class: 'test-view' }, [
-      P('h1', 'Hello World!'),
+	render() {
+		return P('div', { class: 'test-view' }, [
+			P('h1', 'Hello World!'),
 
-      // instead of tag name, specify the view name you registered
-      P('NestedView', { candies: 42 }),
+			// instead of tag name, specify the view name you registered
+			P('NestedView', { candies: 42 }),
 
-      // and you can nest a duplicate that has different properties
-      P('NestedView', { candies: 1337 })
-    ])
-  }
+			// and you can nest a duplicate that has different properties
+			P('NestedView', { candies: 1337 })
+		])
+	}
 }));
 
 P.View('NestedView', () => ({
-  render () {
-    // get the properties from this.props that passed from above
-    return P('span', this.props.candies)
-  }
+	render() {
+		// get the properties from this.props that passed from above
+		return P('h2', this.props.candies)
+	}
 }));
+
+document.body.append(P('TestView').dom);
 ```
 
 This will create a structure like this:
@@ -65,8 +69,8 @@ This will create a structure like this:
 ```html
 <div data-pivot="TestView" class="test-view">
   <h1>Hello World!</h1>
-  <span data-pivot="NestedView">42</span>
-  <span data-pivot="NestedView">1337</span>
+  <h2 data-pivot="NestedView">42</h2>
+  <h2 data-pivot="NestedView">1337</h2>
 </div>
 ```
 
@@ -74,60 +78,65 @@ This will create a structure like this:
 
 ```javascript
 P.View('TestView', () => ({
+	// you can create a function directly here
+	onClickMe() {
+		alert('ouch');
+	},
 
-  // you can create a function directly here
-  onClickMe() {
-    alert('ouch');
-  },
+	render() {
+		return (
+			P('div', { class: 'test-view' }, [
+				P('h1', { text: 'Hello World!' }),
 
-  render() {
-    return (
-      P('div', { class: 'test-view' }, [
-        P('h1', { text: 'Hello World!' }),
-
-        // when the span is clicked, it alerts "ouch"
-        P('span', 'Click Me!', { '@click': () => this.onClickMe() })
-      ])
-    );
-  }
+				// when the span is clicked, it alerts "ouch"
+				P('span', 'Click Me!', { '@click': () => this.onClickMe() })
+			])
+		);
+	}
 }));
+
+document.body.append(P('TestView').dom);
 ```
 
 ### Modifying states
 
 ```javascript
 P.View('TestView', () => ({
-  candies: 0,
+	candies: 0,
 
-  addCandy(number) {
-    this.candies += number;
-  },
+	addCandy(number) {
+		this.candies += number;
+	},
 
-  render() {
-    return (
-      P('div', { class: 'test-view ' + this.candies ? 'enough' : 'not-enough' }, [
-        P('span', 'Candies: ' + this.candies),
+	render() {
+		return (
+			P('div', { class: 'test-view ' + this.candies ? 'enough' : 'not-enough' }, [
+				P('span', 'Candies: ' + this.candies),
 
-        P('button', 'Add 1', { '@click': () => this.addCandy(1) }),
-        P('button', 'Add 2', { '@click': () => this.addCandy(2) }]
-      ])
-    );
-  }
+				P('button', 'Add 1', { '@click': () => this.addCandy(1) }),
+				P('button', 'Add 2', { '@click': () => this.addCandy(2) })
+			])
+		);
+	}
 }));
+
+document.body.append(P('TestView').dom);
 ```
 
 ### Using refs and lifecycles
 
 ```javascript
 P.View('TestView', () => ({
-  loaded () {
-    console.log(this.refs.username.value) // Alice
-  },
+	loaded() {
+		console.log(this.refs.username.value); // Alice
+	},
 
-  render () {
-    return P('div', [
-      P('input', { ref: 'username', type: 'text', value: 'Alice' })
-    ])
-  }
-}))
+	render() {
+		return P('div', [
+			P('input', { ref: 'username', type: 'text', value: 'Alice' })
+		])
+	}
+}));
+
+document.body.append(P('TestView').dom);
 ```
